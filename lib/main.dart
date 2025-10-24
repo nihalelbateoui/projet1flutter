@@ -1,20 +1,35 @@
 import 'package:flutter/material.dart';
-import 'screens/song_list_screen.dart';
+import 'package:get_it/get_it.dart';
+import 'data/song_repository.dart';
+import 'ui/song_list_widget.dart';
 
 void main() {
-  runApp(const PlaylistApp());
+  GetIt.instance.registerSingleton<SongRepository>(SongRepositoryDummyImpl());
+  runApp(const MyApp());
 }
 
-class PlaylistApp extends StatelessWidget {
-  const PlaylistApp({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = ColorScheme.fromSeed(seedColor: Colors.indigo);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Playlist Creator',
-      theme: ThemeData(primarySwatch: Colors.indigo),
-      home: const SongListScreen(),
+      title: 'PROJETPLAYLISTFLUTTER',
+      theme: ThemeData(
+        colorScheme: colorScheme,
+        useMaterial3: true,
+        textTheme: const TextTheme(
+          bodyMedium: TextStyle(fontSize: 18),
+          bodyLarge: TextStyle(fontSize: 18),
+        ),
+        appBarTheme: AppBarTheme(
+          backgroundColor: colorScheme.primary,
+          foregroundColor: colorScheme.onPrimary,
+        ),
+      ),
+      home: const SongListWidget(),
     );
   }
 }
